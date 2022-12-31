@@ -168,6 +168,36 @@
     })
   }
 
+    /**
+   * Courses isotope and filter
+   */
+     window.addEventListener('load', () => {
+      let courseContainer = select('.course-container');
+      if (courseContainer) {
+        let courseIsotope = new Isotope(courseContainer, {
+          itemSelector: '.course-item'
+        });
+  
+        let courseFilters = select('#course-flters li', true);
+  
+        on('click', '#course-flters li', function(e) {
+          e.preventDefault();
+          courseFilters.forEach(function(el) {
+            el.classList.remove('filter-active');
+          });
+          this.classList.add('filter-active');
+  
+          courseIsotope.arrange({
+            filter: this.getAttribute('data-filter')
+          });
+          courseIsotope.on('arrangeComplete', function() {
+            AOS.refresh()
+          });
+        }, true);
+      }
+  
+    });
+
   /**
    * Porfolio isotope and filter
    */
